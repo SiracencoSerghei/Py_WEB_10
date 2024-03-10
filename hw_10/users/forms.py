@@ -14,7 +14,7 @@ class RegisterForm(UserCreationForm):
         ),
     )
     email = forms.CharField(
-        max_length=25,
+        max_length=35,
         required=True,
         widget=forms.EmailInput(
             attrs={"class": "form-control", "placeholder": "Enter email"}

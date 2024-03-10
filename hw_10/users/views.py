@@ -7,6 +7,7 @@ from .forms import RegisterForm
 class RegisterView(View):
     template_name = 'users/signup.html'
     form_class = RegisterForm
+
     def get(self, request):
         return  render(request, self.template_name, {'form': self.form_class})
 
@@ -16,6 +17,6 @@ class RegisterView(View):
             form.save()
             username = form.cleaned_data['username']
             messages.success(request, f"Your account '{username}' was successfully created...")
-            return redirect(to="users:signin")
-        return render(request, self.template_name, {'form': form})
-
+            return redirect(to="users:login")
+        else:
+            return render(request, self.template_name, context={"form": form})
