@@ -1,9 +1,17 @@
-# from django.urls import path
+from django.urls import path, include
+from django.contrib.auth.views import LoginView, LogoutView
 
-# from . import views
+from . import views
+from .forms import LoginForm
 
-# app_name = "users"
+app_name = "users"
 
-# urlpatterns = [
-#     path("", users.main, name="root"),
-# ]
+urlpatterns = [
+    path('signup/', views.RegisterView.as_view(), name='signup'),
+    path('signin/',
+         LoginView.as_view(template_name='users/login.html', form_class=LoginForm, redirect_authenticated_user=True),
+         name='signin'),
+    path('logout/',
+         LoginView.as_view(template_name='users/logout.html'),
+         name='logout'),
+]
