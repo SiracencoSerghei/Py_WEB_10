@@ -58,7 +58,7 @@ def import_records():
                 author = a
             )
             for tag in tags:
-                q.tags.add(tags)
+                q.tags.add(tag)
 
 
 if  __name__ == '__main__':

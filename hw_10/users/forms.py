@@ -7,16 +7,16 @@ from django.contrib.auth.models import User
 
 class RegisterForm(UserCreationForm):
     username = forms.CharField(
-        max_length=16,
+        max_length=100,
         required=True,
         widget=forms.TextInput(
             attrs={"class": "form-control", "placeholder": "Enter username"}
         ),
     )
     email = forms.CharField(
-        max_length=35,
+        max_length=100,
         required=True,
-        widget=forms.EmailInput(
+        widget=forms.TextInput(
             attrs={"class": "form-control", "placeholder": "Enter email"}
         ),
     )
@@ -53,7 +53,7 @@ class RegisterForm(UserCreationForm):
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(
-        max_length=16,
+        max_length=100,
         required=True,
         widget=forms.TextInput(
             attrs={"class": "form-control", "placeholder": "Enter username"}

@@ -7,11 +7,16 @@ from .forms import LoginForm
 app_name = "users"
 
 urlpatterns = [
-    path('signup/', views.RegisterView.as_view(), name='signup'),
-    path('login/',
-         LoginView.as_view(template_name='users/login.html', form_class=LoginForm, redirect_authenticated_user=True),
-         name='login'),
-    path('logout/',
-         LogoutView.as_view(template_name='users/logout.html'),
-         name='logout'),
+    path("signup/", views.RegisterView.as_view(), name="signup"),
+    path(
+        "login/",
+        LoginView.as_view(
+            template_name="users/login.html",
+          #   form_class=LoginForm,
+            authentication_form=LoginForm,
+            redirect_authenticated_user=True,
+        ),
+        name="login",
+    ),
+    path("logout/", LogoutView.as_view(), name="logout"),
 ]

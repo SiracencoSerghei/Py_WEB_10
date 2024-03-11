@@ -19,4 +19,5 @@ class RegisterView(View):
             messages.success(request, f"Your account '{username}' was successfully created...")
             return redirect(to="users:login")
         else:
+            messages.error(request, "Not registered...")
             return render(request, self.template_name, context={"form": form})

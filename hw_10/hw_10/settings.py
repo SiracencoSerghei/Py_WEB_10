@@ -87,7 +87,7 @@ WSGI_APPLICATION = "hw_10.wsgi.application"
 #     }
 # }
 
-POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", "XXXXXXXX")
+POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", "SECRET")
 POSTGRES_HOST = os.getenv("POSTGRES_HOST", "127.0.0.1")
 
 DATABASES = {
@@ -153,3 +153,26 @@ Path(MEDIA_ROOT).mkdir(exist_ok=True, parents=True)
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# logging
+LOGGING1 = {
+    "version": 1,
+    "filters": {
+        "require_debug_true": {
+            "()": "django.utils.log.RequireDebugTrue",
+        }
+    },
+    "handlers": {
+        "console": {
+            "level": "DEBUG",
+            "filters": ["require_debug_true"],
+            "class": "logging.StreamHandler",
+        }
+    },
+    "loggers": {
+        "django.db.backends": {
+            "level": "DEBUG",
+            "handlers": ["console"],
+        }
+    },
+}

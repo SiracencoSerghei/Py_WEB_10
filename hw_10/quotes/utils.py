@@ -18,12 +18,12 @@ MONGODB_USER = os.getenv("MONGODB_USER")
 MONGODB_PASS = os.getenv("MONGODB_PASS")
 MONGODB_HOST = os.getenv("MONGODB_HOST")
 MONGODB_NAME = os.getenv("MONGODB_NAME")
-URI = f"mongodb+srv://{MONGODB_USER}:{MONGODB_PASS}@{MONGODB_HOST}/{MONGODB_NAME}?retryWrites=true&w=majority"
-print(f"Connecting to MongoDB with URI: {URI}")
+URL = f"mongodb+srv://{MONGODB_USER}:{MONGODB_PASS}@{MONGODB_HOST}/{MONGODB_NAME}?retryWrites=true&w=majority"
+print(f"Connecting to MongoDB with URL: {URL}")
 
 
 def get_mongodb():
-    client = MongoClient(URI)
+    client = MongoClient(URL)
 
     db = client[MONGODB_NAME]
     return db
