@@ -23,6 +23,10 @@ MONGODB_NAME = os.getenv("MONGODB_NAME")
 URI = f"mongodb+srv://{MONGODB_USER}:{MONGODB_PASS}@{MONGODB_HOST}/{MONGODB_NAME}?retryWrites=true&w=majority"
 print(f"Connecting to MongoDB with URI: {URI}")
 
+client = MongoClient(URI)
+
+db = client[MONGODB_NAME]
+
 def add_quotes_to_mongo():
     client = None
     try:
