@@ -14,8 +14,6 @@ class Tag(models.Model):
     
 class Quote(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
-    text = models.TextField()
+    quote = models.TextField()
     tags = models.ManyToManyField(Tag)
     created_at = models.DateTimeField(auto_now_add=True)
-    def __str__(self):
-        return self.text[:40] + '...' if len(self.text) > 43 else self.text
