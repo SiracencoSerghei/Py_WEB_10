@@ -1,6 +1,7 @@
 {% extends 'quotes/base.html' %}
 {% load extract_tags %}
 {% block content %}
+
 <div class="row">
     <div class="col-md">
         {% for quote in quotes %}
@@ -14,27 +15,25 @@
                 {% for tag in quote.tags.all %}
                 <a class="tag" href="{% url 'quotes:tag' tag %}">{{tag}}</a>
                 {% endfor %}
+
             </div>
         </div>
         {% endfor %}
-
         <nav>
             <ul class="pager">
                 <li class="previous">
-                    <a class="btn btn-primary"    
-                    href="{% if quotes.has_previous %}{% url 'quotes:main_paginate' quotes.previous_page_number %}{% else %}#{% endif %}"
-                       {% if not quotes.has_previous %}hidden{% endif %}>
-                    <span aria-hidden="true">←</span>
-                        Previous
-                    </a>
+                    <a title="Now is page {{ quotes.number }} of {{ quotes.paginator.num_pages }}"
+                    class="{% if not quotes.has_previous %} disabled {% endif %}"    
+                    href="{% if quotes.has_previous %}  
+                    {% url 'quotes:tag_paginate' tag_query quotes.previous_page_number %}  {% else %} # {% endif %}">
+                    <span aria-hidden="true">←</span> Previous</a>
                 </li>
                 <li class="next">
-                    <a class="btn btn-primary"    
-                    href="{% if quotes.has_next %}{% url 'quotes:main_paginate' quotes.next_page_number %}{% else %}#{% endif %}"
-                       {% if not quotes.has_next %}hidden{% endif %}>
-                        Next
-                        <span aria-hidden="true">→</span>
-                    </a>
+                    <a title="Now is page {{ quotes.number }} of {{ quotes.paginator.num_pages }}"
+                    class="{% if not quotes.has_next %} disabled {% endif %}"    
+                    href="{% if quotes.has_next %}  
+                    {% url 'quotes:tag_paginate' tag_query quotes.next_page_number %}  {% else %} # {% endif %}">
+                        Next <span aria-hidden="true">→</span></a>
                 </li>
             </ul>
         </nav>

@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
-
+from .models import Profile
 
 
 class RegisterForm(UserCreationForm):
@@ -73,3 +73,22 @@ class LoginForm(AuthenticationForm):
             "password",
         ]
 
+
+class ProfileForm(forms.ModelForm):
+    avatar = forms.ImageField(widget=forms.FileInput(attrs={"class": "form-control"}))
+
+    class Meta:
+        model = Profile
+        fields = ["avatar"]
+
+
+class DeleteForm(forms.ModelForm):
+    username = forms.CharField(
+        max_length=100, required=True, widget=forms.HiddenInput()
+    )
+
+    class Meta:
+        model = User
+        fields = [
+            "username",
+        ]
