@@ -102,29 +102,6 @@ class ProfileForm(forms.ModelForm):
         fields = ["avatar"]
 
 
-class RegisterView(View):
-    form_class = CustomUserCreationForm
-    template_name = "users/signup.html"
-
-    def get(self, request):
-        if request.user.is_authenticated:
-            return redirect(to="quotes:main")
-        return render(request, self.template_name, context={"form": self.form_class()})
-
-    def post(self, request):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            user = form.save()
-            messages.success(
-                request, f"Your account '{user.username}' was created successfully."
-            )
-            return redirect(to="users:login")
-        else:
-            messages.error(
-                request, "Unable to create account. Please check the errors below."
-            )
-            return render(request, self.template_name, context={"form": form})
-
 
 class DeleteForm(forms.ModelForm):
     username = forms.CharField(

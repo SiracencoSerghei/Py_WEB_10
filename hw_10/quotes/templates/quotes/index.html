@@ -6,13 +6,13 @@
         {% for quote in quotes %}
          <div class="quote">
             <span class="text" itemprop="text">{{ quote.quote }}</span>
-            <span>by <small class="author" itemprop="author">{{ quote.author }}</small>
-                <a href="{% url 'quotes:author' quote.author %}">(about)</a>
+            <span>by <small class="author" itemprop="author">{{ quote.author.fullname }}</small>
+                <a href="{% url 'quotes:author' quote.author.pk %}">(about)</a>
             </span>
             <div class="tags"> 
                 Tags: 
                 {% for tag in quote.tags.all %}
-                <a class="tag" href="{% url 'quotes:tag' tag %}">{{tag}}</a>
+                <a class="tag" href="{% url 'quotes:tag' tag %}">{{tag.name}}</a>
                 {% endfor %}
             </div>
         </div>

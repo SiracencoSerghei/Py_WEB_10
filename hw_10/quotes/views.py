@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
@@ -41,13 +41,13 @@ def main(request, page=1):
     context = {"quotes": paginator.page(page)}
     return render(request, "quotes/index.html", context)
 
-def author(request, author: str):
-    try:
-        author = Author.objects.get(fullname=author)
-    except:
-        author = None
-    context = {"author": author}
-    return render(request, "quotes/author.html", context)
+
+class AuthorDetailView(View):
+    template_name = "quotes/author.html"
+
+    def get(self, request, pk):
+        author = get_object_or_404(Author, pk=pk)
+        return render(request, self.template_name, {"author": author})
 
 
 def tag(request, tag: str, page: int = 1):
