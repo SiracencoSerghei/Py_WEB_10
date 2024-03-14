@@ -2,7 +2,7 @@
 
 {% block content %}
 <style>
-    .form-login {
+    .form-signin {
         width: 100%;
         max-width: 330px;
         padding: 15px;
@@ -13,7 +13,7 @@
         width: 100%;
     }
 </style>
-<div class="form-login rounded-3 bg-light">
+<div class="form-signin rounded-3 bg-light">
     {% if messages %}
     <div>
         {% for message in messages %}
@@ -30,25 +30,25 @@
     <form method="post" action="{% url 'users:signup' %}">
         {% csrf_token %}
         <div class="mb-3 mt-3">
-            <label class="form-label">Username:
+            <label for="username" class="form-label">Username:
                 {{ form.username }}
             </label>
             <span>{{ form.errors.username }}</span>
         </div>
         <div class="mb-3 mt-3">
-            <label class="form-label">Email:
+            <label for="email" class="form-label">Email:
                 {{ form.email }}
             </label>
             <span>{{ form.errors.username }}</span>
         </div>
         <div class="mb-3">
-            <label class="form-label">Password:
+            <label for="id_password1" class="form-label">Password:
                 {{ form.password1 }}
             </label>
             <span>{{ form.errors.password1 }}</span>
         </div>
         <div class="mb-3">
-            <label class="form-label">Repeat Password:
+            <label for="id_password2" class="form-label"> Password confirmation:
                 {{ form.password2 }}
             </label>
             <span>{{ form.errors.password2 }}</span>
@@ -63,4 +63,5 @@
 
 
 {% endblock %}
+
 

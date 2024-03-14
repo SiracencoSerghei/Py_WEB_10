@@ -27,12 +27,16 @@ def save_profile(sender, instance, **kwargs):
 @receiver(pre_delete, sender=User)
 def delete_avatar(sender, instance, **kwargs):
     try:
-        avatar = instance.profile.avatar
-        # mroot = settings.MEDIA_ROOT
+        profile = instance.profile
+        avatar = profile.avatar
         field = Profile._meta.get_field("avatar")
-        default_value = field.get_default()
-        print("**********  delete_avatar", avatar.name, avatar.path, default_value)
-        if avatar.name != default_value:
+        default_avatar_path = field.default.replace("/", "")  # Remove leading slash
+        avatar_path = avatar.path
+        if avatar_path != default_avatar_path and Path(avatar_path).exists():
             avatar.delete(save=False)
-    except:
+    except Profile.DoesNotExist:
+        # Handle the case where the Profile has not been created yet
         pass
+    except Exception as e:
+        # Log the exception for debugging purposes
+        print(f"An error occurred while deleting the avatar: {e}")

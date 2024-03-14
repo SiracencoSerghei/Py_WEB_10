@@ -14,48 +14,62 @@
 <body>
     <div class="container">
         
- <nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
     <div class="col-md-8">
-                <h1>
-                    <a href="/" style="text-decoration: none">Quotes to Scrape</a>
-                </h1>
-            </div>
+      <h1>
+        <a href="/" style="text-decoration: none">Quotes to Scrape</a>
+      </h1>
+    </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-
       <ul class="navbar-nav">
+        {% url 'quotes:main' as main_url %}
+        {% url 'users:signup' as signup_url %}
+        {% url 'users:login' as login_url %}
+        {% url 'users:logout' as logout_url %}
+        {% url 'users:profile' as profile_url %}
+        {% url 'quotes:add_author' as add_author_url %}
+        {% url 'quotes:add_tag' as add_tag_url %}
+        {% url 'quotes:add_quote' as add_quote_url %}
+        <style>
+          .nav-link.active {
+            color: blue !important;
+          }
+        </style>
+        <li class="nav-item">
+          <a href="/" class="nav-link {% if request.path == main_url %}active{% endif %}" {% if request.path == main_url %}aria-current="page"{% endif %}>Home</a>
+        </li>
         {% if not user.is_authenticated %}
-        <li class="nav-item">
-          <a href="/users/signup" class="nav-link active">SignUp</a>
-        </li>
-        <li class="nav-item">
-          <a href="/users/login" class="nav-link">Login</a>
-        </li>
+          <li class="nav-item">
+            <a href="/users/signup" class="nav-link {% if request.path == signup_url %}active{% endif %}" {% if request.path == signup_url %}aria-current="page"{% endif %}>SignUp</a>
+          </li>
+          <li class="nav-item">
+            <a href="/users/login" class="nav-link {% if request.path == login_url %}active{% endif %}" {% if request.path == login_url %}aria-current="page"{% endif %}>Login</a>
+          </li>
         {% else %}
-        <li class="nav-item">
-          <a href="/users/logout" class="nav-link" title='Username: "{{ user }}"'>Logout</a>
-        </li>
-        <li class="nav-item">
-          <a href="/users/profile" class="nav-link" title='Username: "{{ user }}"'>Profile</a>
-        </li>
-        <li class="nav-item">
-          <a href="/add/author"  class="nav-link">Add author</a>
-        </li>
-        <li class="nav-item">
-          <a href="/add/tag"  class="nav-link">Add tag</a>
-        </li>
-        <li class="nav-item">
-          <a href="/add/quote"  class="nav-link">Add quote</a>
-        </li>
+          <li class="nav-item">
+            <a href="/users/logout" class="nav-link {% if request.path == logout_url %}active{% endif %}" href="{{ logout_url }}" {% if request.path == logout_url %}aria-current="page"{% endif %}>Logout</a>
+          </li>
+          <li class="nav-item">
+            <a href="/users/profile" class="nav-link {% if request.path == profile_url %}active{% endif %}" {% if request.path == profile_url %}aria-current="page"{% endif %}>Profile</a>
+          </li>
+          <li class="nav-item">
+            <a href="/add/author" class="nav-link {% if request.path == add_author_url %}active{% endif %}" {% if request.path == add_author_url %}aria-current="page"{% endif %}>Add author</a>
+          </li>
+          <li class="nav-item">
+            <a href="/add/tag" class="nav-link {% if request.path == add_tag_url %}active{% endif %}" {% if request.path == add_tag_url %}aria-current="page"{% endif %}>Add tag</a>
+          </li>
+          <li class="nav-item">
+            <a href="/add/quote" class="nav-link {% if request.path == add_quote_url %}active{% endif %}" {% if request.path == add_quote_url %}aria-current="page"{% endif %}>Add quote</a>
+          </li>
         {% endif %}
       </ul>
     </div>
   </div>
 </nav>
-
         {% block content%} 
         {% endblock %}
 

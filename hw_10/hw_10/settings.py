@@ -78,9 +78,7 @@ WSGI_APPLICATION = "hw_10.wsgi.application"
 
 
 # Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
-# DATABASES = {
+# https://docs.djangoproj{% csrf_token %}
 #     "default": {
 #         "ENGINE": "django.db.backends.sqlite3",
 #         "NAME": BASE_DIR / "db.sqlite3",
@@ -142,8 +140,6 @@ LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
 
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
 MEDIA_ROOT = BASE_DIR / "media"
 MEDIA_URL = "/media/"
 
@@ -153,6 +149,18 @@ Path(MEDIA_ROOT).mkdir(exist_ok=True, parents=True)
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+AUTH_USER_MODEL = "auth.User"
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = os.getenv("MAIL_SERVER", "smtp.meta.ua")
+EMAIL_PORT = int(os.getenv("MAIL_PORT", 465))
+EMAIL_STARTTLS = False
+EMAIL_USE_SSL = True
+EMAIL_USE_TLS = False
+EMAIL_HOST_USER = os.getenv("MAIL_USERNAME", "youruser@meta.ua")
+EMAIL_HOST_PASSWORD = os.getenv("MAIL_PASSWORD", "yourpassword")
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
 
 # logging
 LOGGING1 = {

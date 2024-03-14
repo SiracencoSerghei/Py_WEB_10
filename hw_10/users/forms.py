@@ -1,8 +1,28 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
+from django.views import View
+from django.shortcuts import render, redirect
+from django.contrib import messages
 
 from .models import Profile
+
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        model = get_user_model()
+        fields = UserCreationForm.Meta.fields + ("email",)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["username"].help_text = None
+
+    def clean_username(self):
+        username = self.cleaned_data.get("username")
+        if get_user_model().objects.filter(username__iexact=username).exists():
+            raise forms.ValidationError("A user with that username already exists.")
+        return username
 
 
 class RegisterForm(UserCreationForm):
@@ -82,6 +102,30 @@ class ProfileForm(forms.ModelForm):
         fields = ["avatar"]
 
 
+class RegisterView(View):
+    form_class = CustomUserCreationForm
+    template_name = "users/signup.html"
+
+    def get(self, request):
+        if request.user.is_authenticated:
+            return redirect(to="quotes:main")
+        return render(request, self.template_name, context={"form": self.form_class()})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            user = form.save()
+            messages.success(
+                request, f"Your account '{user.username}' was created successfully."
+            )
+            return redirect(to="users:login")
+        else:
+            messages.error(
+                request, "Unable to create account. Please check the errors below."
+            )
+            return render(request, self.template_name, context={"form": form})
+
+
 class DeleteForm(forms.ModelForm):
     username = forms.CharField(
         max_length=100, required=True, widget=forms.HiddenInput()
@@ -92,3 +136,4 @@ class DeleteForm(forms.ModelForm):
         fields = [
             "username",
         ]
+
