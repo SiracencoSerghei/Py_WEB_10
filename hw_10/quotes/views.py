@@ -50,26 +50,23 @@ class AuthorDetailView(View):
         return render(request, self.template_name, {"author": author})
 
 
-def tag(request, tag: str, page: int = 1):
-    quotes = []
-    tag_id = None
-    try:
-        tag_id = Tag.objects.get(name=tag).id
-    except:
-        ...
-    print(f"{tag=},{tag_id=}")
-    if tag_id:
-        quotes = Quote.objects.filter(tags=tag_id)
-
-    paginator = Paginator(quotes, per_page=PER_PAGE)
-    context = {"quotes": paginator.page(page), "tag_query": tag}
-    return render(request, "quotes/tag.html", context)
-
-    tag = Tag.objects.get(name=tag)
-    paginator = Paginator(tag, per_page=PER_PAGE)
-
-    context = {"tag": paginator.page(page)}
-    return render(request, "quotes/tag.html", context)
+# def tag(request, tag: str, page: int = 1):
+#     quotes = []
+#     tag_id = None
+#     try:
+#         tag_id = Tag.objects.get(name=tag).id
+#         print( "TAG_ID: ", tag_id)
+#     except:
+#         ...
+#     print(f"{tag=},{tag_id=}")
+#     if tag_id:
+#         quotes = Quote.objects.filter(tags=tag_id)
+#
+#     paginator = Paginator(quotes, per_page=PER_PAGE)
+#
+#     tag = Tag.objects.get(name=tag)
+#     context = {"quotes": paginator.page(page), "tag_query": tag}
+#     return render(request, "quotes/tag.html", context)
 
 
 @login_required
