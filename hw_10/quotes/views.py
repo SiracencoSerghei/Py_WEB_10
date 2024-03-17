@@ -41,14 +41,13 @@ class AuthorDetailView(View):
 
 
 def tag(request, tag: str, page: int = 1):
-    quotes = []
-    tag_id = None
     try:
         tag_obj = Tag.objects.get(name=tag)
         tag_id = tag_obj.id
         print( "TAG_ID: ", tag_id)
     except Tag.DoesNotExist:
-        print("hello errors...")
+        return render(request, "404.html", status=404)
+
     if tag_id:
         quotes = Quote.objects.all()
         print(quotes)

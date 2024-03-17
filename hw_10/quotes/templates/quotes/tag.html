@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col-md">
         <h1>
-        <a href="/" style="text-decoration: none">Sorted by {{tag.name}}</a>
+        <a href="/" style="text-decoration: none">Viewing tag {{tag.name}}</a>
       </h1>
         {% for quote in quotes %}
          <div class="quote">
@@ -22,25 +22,23 @@
         {% endfor %}
 
         <nav>
-            <ul class="pager">
-                <li class="previous">
-                    <a class="btn btn-primary"    
-                    href="{% if quotes.has_previous %}{% url 'quotes:main_paginate' quotes.previous_page_number %}{% else %}#{% endif %}"
-                       {% if not quotes.has_previous %}hidden{% endif %}>
-                    <span aria-hidden="true">←</span>
-                        Previous
-                    </a>
-                </li>
-                <li class="next">
-                    <a class="btn btn-primary"    
-                    href="{% if quotes.has_next %}{% url 'quotes:main_paginate' quotes.next_page_number %}{% else %}#{% endif %}"
-                       {% if not quotes.has_next %}hidden{% endif %}>
-                        Next
-                        <span aria-hidden="true">→</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+    <ul class="pager">
+        <li class="previous">
+            <a class="btn btn-primary" href="{% if quotes.has_previous %}{% url 'quotes:tag_paginate' tag.name quotes.previous_page_number %}{% else %}#{% endif %}"
+               {% if not quotes.has_previous %}hidden{% endif %}>
+                <span aria-hidden="true">←</span>
+                Previous
+            </a>
+        </li>
+        <li class="next">
+            <a class="btn btn-primary" href="{% if quotes.has_next %}{% url 'quotes:tag_paginate' tag.name quotes.next_page_number %}{% else %}#{% endif %}"
+               {% if not quotes.has_next %}hidden{% endif %}>
+                Next
+                <span aria-hidden="true">→</span>
+            </a>
+        </li>
+    </ul>
+</nav>
     </div>
 </div>
 {% endblock %}
