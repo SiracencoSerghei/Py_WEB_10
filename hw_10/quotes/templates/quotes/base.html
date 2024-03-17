@@ -21,10 +21,10 @@
         <a href="/" style="text-decoration: none">Quotes to Scrape</a>
       </h1>
     </div>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    {% comment %} <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
+    <div class="collapse navbar-collapse" id="navbarNav"> {% endcomment %}
       <ul class="navbar-nav">
         {% url 'quotes:main' as main_url %}
         {% url 'users:signup' as signup_url %}
@@ -67,7 +67,7 @@
           </li>
         {% endif %}
       </ul>
-    </div>
+    {% comment %} </div> {% endcomment %}
   </div>
 </nav>
         {% block content%} 

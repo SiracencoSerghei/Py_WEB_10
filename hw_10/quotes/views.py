@@ -24,16 +24,6 @@ else:
 PER_PAGE = os.getenv("PER_PAGE")
 
 
-# def main(request, page=1):
-#     db = get_mongodb()
-#     quotes = db.quotes.find()
-#     per_page = 10
-#     paginator = Paginator(list(quotes), per_page)
-#     quotes_on_page = paginator.page(page)
-
-#     return render(request, "quotes/index.html", context={"quotes": quotes_on_page})
-
-
 def main(request, page=1):
     quotes = Quote.objects.all()
     paginator = Paginator(quotes, per_page=PER_PAGE)
@@ -50,23 +40,25 @@ class AuthorDetailView(View):
         return render(request, self.template_name, {"author": author})
 
 
-# def tag(request, tag: str, page: int = 1):
-#     quotes = []
-#     tag_id = None
-#     try:
-#         tag_id = Tag.objects.get(name=tag).id
-#         print( "TAG_ID: ", tag_id)
-#     except:
-#         ...
-#     print(f"{tag=},{tag_id=}")
-#     if tag_id:
-#         quotes = Quote.objects.filter(tags=tag_id)
-#
-#     paginator = Paginator(quotes, per_page=PER_PAGE)
-#
-#     tag = Tag.objects.get(name=tag)
-#     context = {"quotes": paginator.page(page), "tag_query": tag}
-#     return render(request, "quotes/tag.html", context)
+def tag(request, tag: str, page: int = 1):
+    quotes = []
+    tag_id = None
+    try:
+        tag_obj = Tag.objects.get(name=tag)
+        tag_id = tag_obj.id
+        print( "TAG_ID: ", tag_id)
+    except Tag.DoesNotExist:
+        print("hello errors...")
+    if tag_id:
+        quotes = Quote.objects.all()
+        print(quotes)
+        quotes = quotes.filter(tags__id=tag_id).distinct()
+        print(quotes)
+        paginator = Paginator(quotes, per_page=PER_PAGE)
+
+        context = {"quotes": paginator.page(page), "tag": tag_obj}
+        print(context)
+    return render(request, "quotes/tag.html", context)
 
 
 @login_required

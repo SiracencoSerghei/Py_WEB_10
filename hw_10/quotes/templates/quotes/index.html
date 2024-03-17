@@ -12,7 +12,7 @@
             <div class="tags"> 
                 Tags: 
                 {% for tag in quote.tags.all %}
-                <span class="tag" href="#" >{{tag.name}}</span>
+                 <a class="tag" href="{% url 'quotes:tag' tag.name %}">{{ tag.name }}</a>
                 {% endfor %}
             </div>
         </div>

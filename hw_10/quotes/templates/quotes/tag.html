@@ -3,6 +3,9 @@
 {% block content %}
 <div class="row">
     <div class="col-md">
+        <h1>
+        <a href="/" style="text-decoration: none">Sorted by {{tag.name}}</a>
+      </h1>
         {% for quote in quotes %}
          <div class="quote">
             <span class="text" itemprop="text">{{ quote.quote }}</span>
@@ -12,7 +15,7 @@
             <div class="tags"> 
                 Tags: 
                 {% for tag in quote.tags.all %}
-                <a class="tag" href="{% url 'quotes:tag' tag %}">{{tag.name}}</a>
+                 <a class="tag" href="{% url 'quotes:tag' tag.name %}">{{ tag.name }}</a>
                 {% endfor %}
             </div>
         </div>
