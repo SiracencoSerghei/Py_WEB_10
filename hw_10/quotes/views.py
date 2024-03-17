@@ -44,19 +44,15 @@ def tag(request, tag: str, page: int = 1):
     try:
         tag_obj = Tag.objects.get(name=tag)
         tag_id = tag_obj.id
-        print( "TAG_ID: ", tag_id)
     except Tag.DoesNotExist:
         return render(request, "404.html", status=404)
 
     if tag_id:
         quotes = Quote.objects.all()
-        print(quotes)
         quotes = quotes.filter(tags__id=tag_id).distinct()
-        print(quotes)
         paginator = Paginator(quotes, per_page=PER_PAGE)
 
         context = {"quotes": paginator.page(page), "tag": tag_obj}
-        print(context)
     return render(request, "quotes/tag.html", context)
 
 
