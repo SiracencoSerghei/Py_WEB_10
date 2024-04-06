@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 from dotenv import load_dotenv
 import os
+from django.core.management.utils import get_random_secret_key
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,12 +24,20 @@ load_dotenv(BASE_DIR.parent.joinpath(".env"))
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+
+# Generate a random secret key or use a default one
+default_secret = "django-insecure-+8d3(#k40g2ve)xx#j7%q-9+myvm_zw6&y&+tprr$)++nv6lbg"
+generated_secret = get_random_secret_key()
 SECRET_KEY = os.getenv(
-    "SECRET_KEY", "django-insecure-+8d3(#k40g2ve)xx#j7%q-9+myvm_zw6&y&+tprr$)++nv6lbg"
+    "SECRET_KEY", generated_secret if generated_secret else default_secret
 )
 
+# Ensure that SECRET_KEY is set
+assert SECRET_KEY is not None, "SECRET_KEY MUST BE set in .env or generated dynamically"
+
+
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]  # Allow all hosts
 
