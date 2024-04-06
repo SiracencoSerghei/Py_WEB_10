@@ -1,0 +1,10 @@
+{
+    "files.defaultLanguage": "english",
+    "workbench.editor.historyBasedLanguageDetection": false,
+    "workbench.editor.languageDetection": false,
+    "emmet.excludeLanguages": [
+        "markdown",
+        "en"
+    ],
+    "search.useGlobalIgnoreFiles": false
+}
