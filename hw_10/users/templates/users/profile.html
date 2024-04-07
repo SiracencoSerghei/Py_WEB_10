@@ -1,7 +1,6 @@
 {% extends "quotes/base.html" %}
 
 {% block content %}
-
 <style>
     .form-signin {
         width: 100%;
@@ -13,7 +12,7 @@
     label {
         width: 100%;
     }
-    
+
     input {
         width: 100%;
     }
@@ -45,8 +44,8 @@
     </div>
     <div class="grid text-center p-3">
         <button type="submit"  class="btn btn-primary">Save Changes</button>
-        <button type="reset"  class="btn btn-secondary">Reset</button>
-        <a role="button"  class="btn btn-secondary" href="{% url 'users:delete' %}" 
+        <button type="reset" id="reset-button" class="btn btn-secondary">Reset</button>
+        <a role="button"  class="btn btn-secondary" href="{% url 'users:delete' %}"
         data-target="modal-example" onClick="toggleModal(event)">DELETE USER</a>
     </div>
 </form>
@@ -83,5 +82,12 @@
     <!-- Modal -->
     <script src="/static/noteapp/js/modal.js"></script>
 </div>
+
+<script>
+document.getElementById('reset-button').addEventListener('click', function(event) {
+  event.preventDefault(); // Prevent the default form submission
+  window.location.href = "{% url 'quotes:main' %}"; // Redirect to the home page
+});
+</script>
 
 {% endblock content %}

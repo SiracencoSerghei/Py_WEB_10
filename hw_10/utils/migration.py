@@ -13,7 +13,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "hw_10.settings")
 django.setup()
 
 from quotes.models import Quote, Author, Tag  # noqa
-from quotes.utils import get_mongodb
+from hw_10.quotes.utils import get_mongodb
 
 
 def print_model_fields(model):

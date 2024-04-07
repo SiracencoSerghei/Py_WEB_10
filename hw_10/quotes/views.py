@@ -25,7 +25,7 @@ PER_PAGE = os.getenv("PER_PAGE")
 
 
 def main(request, page=1):
-    quotes = Quote.objects.all()
+    quotes = Quote.objects.all().order_by("id")
     paginator = Paginator(quotes, per_page=PER_PAGE)
 
     context = {"quotes": paginator.page(page)}
