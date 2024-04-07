@@ -33,3 +33,16 @@ GoIT, Python WEB, Homework number 10. Django. PostgreSQL. Docker. MongoDB.
 - Реалізуйте механізм скидання паролю для зареєстрованого користувача;
 - Усі змінні середовища повинні зберігатися у файлі .env та використовуватися у файлі settings.py
 
+
+
+## Execution
+
+### In docker:
+ 
+```
+docker-compose up -d code 
+```
+after: 
+
+
+### Open the browser page http://localhost:8000 
