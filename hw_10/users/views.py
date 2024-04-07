@@ -59,20 +59,27 @@ def profile(request):
 
 @login_required
 def deleteuser(request):
+    if not request.user.is_authenticated:
+        return redirect(to="users:logout")
+
     if request.method == "POST":
         form = DeleteForm(request.POST)
-        if form.is_valid() and form.cleaned_data["username"] == request.user.username:
-            request.user.delete()
-            messages.success(request, "User was deleted successfully")
-            return redirect(to="quotes:main")
+        if form.data.get("username") == request.user.username:
+            if request.user.delete():
+                messages.success(request, "User was deleted successfully")
+                return redirect(to="quotes:main")
+            else:
+                messages.error(request, "User was not deleted")
         else:
-            messages.error(request, "User was not deleted. Data of form is wrong")
-    else:
-        form = DeleteForm()
+            messages.error(
+                request,
+                f'User was not deleted. Data of form is wrong {form.data["username"]=}, {request.user.username=}',
+            )
+
     return render(
         request,
         "users/delete.html",
-        context={"form": form, "username": request.user.username},
+        context={"form": DeleteForm(), "username": request.user},
     )
 
 

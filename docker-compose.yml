@@ -1,0 +1,23 @@
+# docker-compose up -d
+version: "3.8"
+name: py_web_10
+services:
+  pg:
+    image: postgres
+    expose:
+      - "5432"
+    # ports:
+    #   - "5432:5432"
+    env_file:
+      - ./.env
+
+  code :
+    build: ./
+    image: siracencoserghei/py_web_10
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./.env
+    depends_on:
+      - pg
+
